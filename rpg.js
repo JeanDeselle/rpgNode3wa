@@ -5,7 +5,7 @@ import figlet from "figlet";
 
 // get characters data
 const characters = JSON.parse(fs.readFileSync("./characters.json")).characters;
-
+let charactersName ;
 // create character stats
 const setCharacter = (character) => {
   const stats = {};
@@ -112,11 +112,11 @@ const endGame = (winnerName, looserName, winnerSecondName, winnerHP, allie1, all
     console.log("\n");
   } else if (winnerName === "hydra"){
     console.log("\n");
-    console.log(chalk.yellow(`${winnerName} defeat ${looserName}, ${winnerSecondName} win with ${winnerHP} HP at turn ${turn}`));
+    console.log(chalk.yellow(`${winnerName} defeat ${looserName}, ${winnerSecondName} win at turn ${turn}`));
     console.log("\n");
   } else {
     console.log("\n");
-    console.log(chalk.yellow(`${winnerName}${!!allie1 ? ", " + allie1 : "" }${!!allie2 ? ", " + allie2 : "" } defeat ${looserName}, ${winnerSecondName} win with ${winnerHP} HP at turn ${turn}`));
+    console.log(chalk.yellow(`${winnerName}${!!allie1 ? ", " + allie1 : "" }${!!allie2 ? ", " + allie2 : "" } defeat ${looserName}, ${winnerSecondName} win ${winnerHP > 0 ? `with ${winnerHP}` : `you are dead but your allies win`}  HP at turn ${turn}`));
     console.log("\n");
   }
 
@@ -188,8 +188,9 @@ const prompt = (type, message, choices, number) => {
                   action(attack[Math.floor(Math.random() * 6) + 1] , play, hydra, true);
                 }
               }else{
+                // todo il attaque que les vivant et le random et le passif
                 // hydra attack
-                for (let i = 0; i < hydra.headNumber; i++) action(attack[Math.floor(Math.random() * 6) + 1], hydra, player, false);
+                for (let i = 0; i < hydra.headNumber; i++) action(attack[Math.floor(Math.random() * 6) + 1], hydra, getRandomTarget(players), false);
                 // is hydra alive
                 if (hydra.health <= 0) return endGame(player.pseudo, "Hydra", "you", player.health, !!player2 ? player2.pseudo : undefined, !!player3 ? player3.pseudo : undefined);
               }
@@ -214,12 +215,12 @@ const prompt = (type, message, choices, number) => {
         case 6: //loan et jean
           if (res.answer === "0") {
             console.log("Nice guts, i like that");
-            return prompt("list", "Wich class do you want to play ?", ["Magician", "Paladin", "Barbarian"], 2);
+            return prompt("list", "Wich class do you want to play ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 2);
           }
           else if(res.answer === "1"){
-            return prompt("list", "Which class do you want for your ally ?", ["Magician", "Paladin", "Barbarian"], 7);
+            return prompt("list", "Which class do you want for your ally ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 7);
           }else if(res.answer === "2"){
-            return prompt("list", "Which class do you want for your first allies ?", ["Magician", "Paladin", "Barbarian"], 8);
+            return prompt("list", "Which class do you want for your first allies ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 8);
           }
           
         case 7: //loan
@@ -232,7 +233,7 @@ const prompt = (type, message, choices, number) => {
 
         case 8: // loan
           player3 = setCharacter(res.answer);
-          return prompt("list", "Which class do you want for your last ally ?", ["Magician", "Paladin", "Barbarian"], 7);
+          return prompt("list", "Which class do you want for your last ally ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName, 7);
 
         case 9: //loan
           if(res.answer !== ""){
@@ -240,7 +241,7 @@ const prompt = (type, message, choices, number) => {
           }else{
             return prompt("input", "What's your name, seriously?", [], 9);
           }
-          return prompt("list", "Wich class do you want to play ?", ["Magician", "Paladin", "Barbarian"], 2);
+          return prompt("list", "Wich class do you want to play ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 2);
           
         case 10: //jean 
         if(res.answer !== ""){
@@ -266,17 +267,36 @@ const prompt = (type, message, choices, number) => {
       });
 };
 
+const getCharactersName = () => {
+  const arr = [];
+  characters.map(char => {
+    if(char.name !== "hydra"){
+      arr.push(char.name);
+    }
+  })
+  return arr;
+}
+
+const getRandomTarget = (players = []) => {
+  const random = Math.floor(Math.random() * (players.length -1  + 1))
+    const target = players[random];
+    if(target.health <= 0){
+      getRandomTarget();
+    }
+    return target
+}
+
 // start process
 figlet("UN JOUR ON SAURA CODER", (err, data) => {
   if (err) return console.log(err);
-
+  isActive = true
   // clear terminal
   const lines = process.stdout.getWindowSize()[1];
   for (let i = 0; i < lines; i++) console.log("\r\n");
 
   console.log(data);
   console.log("\n");
-
+  charactersName = getCharactersName();
   // call recursion
   prompt("list", "What difficulty do you want", ["Easy", "Medium", "Hard"], 1);
 });

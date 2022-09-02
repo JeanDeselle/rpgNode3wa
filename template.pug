@@ -1,5 +1,5 @@
 extend layout.pug
-
+//- jean
 block addClass
     h1 add class
     section.ctnAddClass
@@ -9,50 +9,60 @@ block addClass
             fieldset
                 h2 Health Points
                 article
-                    label(for="minHp") min HP  <span class="valueRange"></span>
+                    label(for="minHp") min HP  
                     input.inputsStat(id="minHp", type="range", min="1", max="50" )
+                    <span id="valueminHp"></span>
                 article
-                    label(for="maxHp") max HP  <span class="valueRange"></span>
+                    label(for="maxHp") max HP  
                     input.inputsStat(id="maxHp", type="range", min="50", max="200"  )
+                    <span id="valuemaxHp"></span>
         section
             fieldset
                 h2 Armor 
                 article
-                    label(for="minArmor") min Armor  <span class="valueRange"></span>
+                    label(for="minArmor") min Armor  
                     input.inputsStat(id="minArmor", type="range", min="0", max="5" )
+                    <span id="valueminArmor"></span>
                 article
-                    label(for="maxArmor") max Armor  <span class="valueRange"></span>
+                    label(for="maxArmor") max Armor  
                     input.inputsStat(id="maxArmor", type="range", min="5", max="10" )
+                    <span id="valuemaxArmor"></span>
         section
             fieldset
                 h2 Magic power 
                 article
-                    label(for="minMp") min magic power  <span class="valueRange"></span>
+                    label(for="minMagic") min magic power  
                     input.inputsStat(id="minMagic", type="range", min="0", max="50" )
+                    <span id="valueminMagic"></span>
                 article
-                    label(for="maxMp") max magic power  <span class="valueRange"></span>
+                    label(for="maxMagic") max magic power  
                     input.inputsStat(id="maxMagic", type="range", min="50", max="100")
+                    <span id="valuemaxMagic"></span>
         section
             fieldset
                 h2 Strenght 
                 article
-                    label(for="minStrenght") min Strenght  <span class="valueRange"></span>
+                    label(for="minStrenght") min Strenght  
                     input.inputsStat(id="minStrenght", type="range", min="0", max="50" )
+                    <span id="valueminStrenght"></span>
                 article
-                    label(for="maxStrenght") max Strenght  <span class="valueRange"></span>
-                    input.inputsStat(id="maxStrenght", type="range", min="50", max="100")
+                    label(for="maxStrenght") max Strenght  
+                    input.inputsStat(id="maxStrenght", type="range", min="50", max="100") 
+                    <span id="valuemaxStrenght"></span>
         section
             fieldset
                 h2 Speed 
                 article
-                    label(for="minSpeed") min Speed  <span class="valueRange"></span>
+                    label(for="minSpeed") min Speed  
                     input.inputsStat(id="minSpeed", type="range", min="0", max="50" ) 
+                    <span id="valueminSpeed"></span>
                 article
-                    label(for="maxSpeed") max Speed  <span class="valueRange"></span>
+                    label(for="maxSpeed") max Speed  
                     input.inputsStat(id="maxSpeed", type="range", min="50", max="100" )
+                    <span id="valuemaxSpeed"></span>
         button(type='button' id="buttonAdd") add
         a(href="/") class list
-    
+//- loan
 block classList
     h1 Class list
     ul.ctnClassList

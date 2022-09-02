@@ -5,7 +5,7 @@ import fs from "fs";
 const hostname = "localhost";
 const port = "8081";
 const characters = JSON.parse(fs.readFileSync("./characters.json")).characters;
-
+// loan et jean
 function getTemplate(value , res) {
     try {
         res.writeHead(200, {
@@ -29,25 +29,31 @@ const server = http.createServer((req, res) => {
 		res.end();
 		return;
 	} else if (url === "") {
+        // loan et jean
 		getTemplate({formulaire : false , classList : characters} , res);
 	} else if (url === "app.js") {
+        // jean
 		res.writeHead(200, { "Content-Type": "text/javascript" });
 		const js = fs.readFileSync("./asset/javascript/app.js");
 		res.write(js);
 		return res.end();
 	} else if (url === "addClass"){
+        // loan et jean
         getTemplate({formulaire : true }, res);
     }else if (url === "style.css"){
+        // loan et jean
         res.writeHead(200, { "Content-Type": "text/css" });
 		const css = fs.readFileSync("./asset/css/style.css");
 		res.write(css);
         return res.end();
     }else if (url === "bg.jpg"){
+        // loan
         res.writeHead(200, { "Content-Type": "image/jpeg" });
 		const img = fs.readFileSync("./asset/img/bg.jpg");
 		res.write(img);
         return res.end();
     } else if (url === "shyguy.png"){
+        // loan
         res.writeHead(200, { "Content-Type": "image/png" });
 		const img = fs.readFileSync("./asset/img/shyguy.png");
 		res.write(img);
@@ -55,6 +61,7 @@ const server = http.createServer((req, res) => {
     }
 
 	if (req.method === "POST") {
+        // jean
 		let body = "";
 		req.on("data", (data) => (body += data));
 
@@ -76,6 +83,7 @@ server.listen(port, hostname, () => {
 });
 
 function checkValue(obj) {
+    // jean
     console.log("check");
 	let checked = true;
     for (const prop in obj) {

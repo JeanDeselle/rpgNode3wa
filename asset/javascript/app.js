@@ -2,7 +2,7 @@ const inputs = document.querySelectorAll(".inputsStat");
 const btnAdd = document.querySelector("#buttonAdd");
 const inputName = document.querySelector("#nameClass");
 
-
+//  loan
 function shyGuyTalk() {
     const vignette = document.querySelector(".vignette");
 	const random = Math.floor(Math.random() * 10) + 1;
@@ -19,9 +19,9 @@ function shyGuyTalk() {
 		10 : "MAIS POUSSEZ VOUS ! ON EST EN GUETS-APENS LA !"	}
         vignette.innerHTML = message[random];
 }
-
 function createClass(data) {
-	// console.log(data);
+    // console.log(data);
+    //  loan
 	const classDesc = {
 		name: data.name,
 		health: {
@@ -45,14 +45,14 @@ function createClass(data) {
 			max: data.maxSpeed,
 		},
 	};
-
+    // jean
 	fetch("http://localhost:8081", {
 		method: "POST",
 		body: JSON.stringify(classDesc),
 	});
 }
-
 if (btnAdd) {
+    // jean
     const elements = {};
 	btnAdd.addEventListener("click", function (e) {
 		elements["name"] = inputName.value;
@@ -63,15 +63,12 @@ if (btnAdd) {
 		createClass(elements);
 	});
 
-    // inputs.map(input => {
-    //     input.addEventListener("input", function (e) {
-    //         console.log(e);
-    //     });
-    // })
     for (let i = 0; i < inputs.length; i++) {
         const element = inputs[i];
         element.addEventListener("input",(e) => {
-            console.log(e);
+            console.log(element);
+            const spanValue = document.getElementById("value" + element.id);
+            spanValue.innerHTML = e.target.value;
         })
     }
 }
