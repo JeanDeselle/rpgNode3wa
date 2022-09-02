@@ -1,0 +1,97 @@
+h1 {
+    text-align: center;
+}
+
+.ctnClassList {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    list-style: none;
+}
+
+.ctnClassList li {
+    border: white solid 3px;
+    margin : 1em;
+    border-radius: 25px;
+}
+
+body {
+    background-image: url("bg.jpg");
+    background-size: cover;
+    color : white
+}
+
+#shyGuy {
+    height : 200px;
+    width: 200px;
+    position: fixed;
+    bottom : 0px;
+    right: 5%;
+    display: block
+
+}
+
+.vignette {
+    position: fixed;
+    bottom : 220px;
+    width: 200px;
+    right: 5%;
+    display: block
+
+}
+/* =============================================== */
+/* addClass */
+
+.ctnAddClass{
+    background-color: #fff;
+    border: 1px solid blue;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin : auto;
+    width: fit-content;
+    display : flex;
+    flex-direction : column;
+    gap : 1rem;
+    color: #333;
+}
+
+.ctnAddClass #nameClass{
+    width: 95%;
+}
+.ctnAddClass #buttonAdd{
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    margin: auto;
+    border: 1px solid blue;
+    background-color: #fff;
+    color: blue;
+    border-radius: 0.5rem;
+}
+
+.ctnAddClass a{
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    text-decoration: none;
+    color: blue;
+}
+
+.ctnAddClass  article {
+    display : flex;
+    gap : 1rem;
+}
+.ctnAddClass fieldset {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    border-color: blue;
+}
+
+.ctnAddClass h2 {
+    font-size: 1rem;
+    margin: auto;
+    color: blue;
+}
+
+.ctnAddClass  article > label {
+    width : 8rem;
+}

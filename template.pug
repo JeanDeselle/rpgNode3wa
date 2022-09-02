@@ -1,0 +1,72 @@
+extend layout.pug
+
+block addClass
+    h1 add class
+    section.ctnAddClass
+        section
+            input(type="text", name="addClass" , placeholder="Choose the name of your class" , id="nameClass")
+        section
+            fieldset
+                h2 Health Points
+                article
+                    label(for="minHp") min HP  <span class="valueRange"></span>
+                    input.inputsStat(id="minHp", type="range", min="1", max="50" )
+                article
+                    label(for="maxHp") max HP  <span class="valueRange"></span>
+                    input.inputsStat(id="maxHp", type="range", min="50", max="200"  )
+        section
+            fieldset
+                h2 Armor 
+                article
+                    label(for="minArmor") min Armor  <span class="valueRange"></span>
+                    input.inputsStat(id="minArmor", type="range", min="0", max="5" )
+                article
+                    label(for="maxArmor") max Armor  <span class="valueRange"></span>
+                    input.inputsStat(id="maxArmor", type="range", min="5", max="10" )
+        section
+            fieldset
+                h2 Magic power 
+                article
+                    label(for="minMp") min magic power  <span class="valueRange"></span>
+                    input.inputsStat(id="minMagic", type="range", min="0", max="50" )
+                article
+                    label(for="maxMp") max magic power  <span class="valueRange"></span>
+                    input.inputsStat(id="maxMagic", type="range", min="50", max="100")
+        section
+            fieldset
+                h2 Strenght 
+                article
+                    label(for="minStrenght") min Strenght  <span class="valueRange"></span>
+                    input.inputsStat(id="minStrenght", type="range", min="0", max="50" )
+                article
+                    label(for="maxStrenght") max Strenght  <span class="valueRange"></span>
+                    input.inputsStat(id="maxStrenght", type="range", min="50", max="100")
+        section
+            fieldset
+                h2 Speed 
+                article
+                    label(for="minSpeed") min Speed  <span class="valueRange"></span>
+                    input.inputsStat(id="minSpeed", type="range", min="0", max="50" ) 
+                article
+                    label(for="maxSpeed") max Speed  <span class="valueRange"></span>
+                    input.inputsStat(id="maxSpeed", type="range", min="50", max="100" )
+        button(type='button' id="buttonAdd") add
+        a(href="/") class list
+    
+block classList
+    h1 Class list
+    ul.ctnClassList
+        each RPGClass of classList
+            li 
+                p Name : #{RPGClass.name}
+                p Minimum Health Points : #{RPGClass.health.min}
+                p Maximum Health Points : #{RPGClass.health.max}
+                p Minimum Armor Points : #{RPGClass.armor.min}
+                p Maximum Armor Points : #{RPGClass.armor.max}
+                p Minimum Strenght Points : #{RPGClass.strength.min}
+                p Maximum Strenght Points : #{RPGClass.strength.max}
+                p Mininmum Magic Ability Points : #{RPGClass.magic.min}
+                p Maximum Magic Ability Points : #{RPGClass.magic.max}
+                p Minimum Speed Points : #{RPGClass.speed.min}
+                p Maximum Speed Points : #{RPGClass.speed.max}
+    a(href="/addClass") add class

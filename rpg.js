@@ -24,6 +24,8 @@ const setCharacter = (character) => {
   // return character stats
   return stats;
 };
+
+//jean et loan
 const attack = {
   1 : 'Physical attack',
   2 : 'Magic attack',
@@ -98,7 +100,7 @@ const action = (action, attacker, target, choose) => {
   
 };
 
-// endGame function
+// endGame function Loan
 const endGame = (winnerName, looserName, winnerSecondName, winnerHP, allie1, allie2 ) => {
   if (turn === 1) {
     console.log("\n");
@@ -122,7 +124,6 @@ const endGame = (winnerName, looserName, winnerSecondName, winnerHP, allie1, all
   turn = 1;
   hydra = setCharacter("hydra");
   isActive = false;
-  //prompt("list", "Play an other game?", ["Yes", "No"], 5);
 };
 
 // recursion function
@@ -155,6 +156,7 @@ const prompt = (type, message, choices, number) => {
 
           player.pseudo = res.answer;
           break;
+          // loan et jean
         case 4:
           let players = [];
           players.push(player);
@@ -175,7 +177,6 @@ const prompt = (type, message, choices, number) => {
             return 0;
           })
           
-
           players.forEach(play => {
               if(play.name !== "hydra"){
                 // is player alive
@@ -196,6 +197,7 @@ const prompt = (type, message, choices, number) => {
               if (player.health <= 0 && (player2.health <= 0 && !!player2) && (player3.health <= 0 && !!player3)) return endGame("Hydra", play.pseudo, "Hydra", hydra.health);
      
           });
+          // loan
           if(!isActive){
             return prompt("list", "Play an other game?", ["Yes", "No"], 5);
           }
@@ -209,7 +211,7 @@ const prompt = (type, message, choices, number) => {
           // exit game
           return process.exit(0);
 
-        case 6:
+        case 6: //loan et jean
           if (res.answer === "0") {
             console.log("Nice guts, i like that");
             return prompt("list", "Wich class do you want to play ?", ["Magician", "Paladin", "Barbarian"], 2);
@@ -220,7 +222,7 @@ const prompt = (type, message, choices, number) => {
             return prompt("list", "Which class do you want for your first allies ?", ["Magician", "Paladin", "Barbarian"], 8);
           }
           
-        case 7:
+        case 7: //loan
           player2 = setCharacter(res.answer);
           if(!player3){
             return prompt("input", "What's the name of your ally ?", [], 9);
@@ -228,11 +230,11 @@ const prompt = (type, message, choices, number) => {
             return prompt("input", "What's the name of your first ally ?", [], 10);
           }
 
-        case 8:
+        case 8: // loan
           player3 = setCharacter(res.answer);
           return prompt("list", "Which class do you want for your last ally ?", ["Magician", "Paladin", "Barbarian"], 7);
 
-        case 9:
+        case 9: //loan
           if(res.answer !== ""){
             player2.pseudo = res.answer;
           }else{
@@ -240,7 +242,7 @@ const prompt = (type, message, choices, number) => {
           }
           return prompt("list", "Wich class do you want to play ?", ["Magician", "Paladin", "Barbarian"], 2);
           
-        case 10: 
+        case 10: //jean 
         if(res.answer !== ""){
           player3.pseudo = res.answer;
         }else{
