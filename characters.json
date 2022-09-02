@@ -1,0 +1,97 @@
+{
+  "characters": [
+    {
+      "name": "magician",
+      "health": {
+        "min": 100,
+        "max": 150
+      },
+      "armor": {
+        "min": 10,
+        "max": 15
+      },
+      "magic": {
+        "min": 85,
+        "max": 100
+      },
+      "strength": {
+        "min": 25,
+        "max": 40
+      },
+      "speed": {
+        "min": 60,
+        "max": 85
+      }
+    },
+    {
+      "name": "barbarian",
+      "health": {
+        "min": 140,
+        "max": 180
+      },
+      "armor": {
+        "min": 2,
+        "max": 5
+      },
+      "magic": {
+        "min": 25,
+        "max": 40
+      },
+      "strength": {
+        "min": 85,
+        "max": 100
+      },
+      "speed": {
+        "min": 20,
+        "max": 45
+      }
+    },
+    {
+      "name": "paladin",
+      "health": {
+        "min": 175,
+        "max": 200
+      },
+      "armor": {
+        "min": 1,
+        "max": 3
+      },
+      "magic": {
+        "min": 40,
+        "max": 65
+      },
+      "strength": {
+        "min": 40,
+        "max": 65
+      },
+      "speed": {
+        "min": 50,
+        "max": 75
+      }
+    },
+    {
+      "name": "hydra",
+      "health": {
+        "min": 150,
+        "max": 200
+      },
+      "armor": {
+        "min": 5,
+        "max": 10
+      },
+      "magic": {
+        "min": 10,
+        "max": 20
+      },
+      "strength": {
+        "min": 10,
+        "max": 20
+      },
+      "speed": {
+        "min": 75,
+        "max": 100
+      },
+      "headNumber": null
+    }
+  ]
+}
