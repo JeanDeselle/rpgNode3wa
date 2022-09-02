@@ -62,7 +62,12 @@ const action = (action, attacker, target, choose) => {
       case "Magic attack":
         damage = attacker.magic + dice - target.armor;
         if (damage < 0) damage = 0;
-        target.health -= damage;
+        if(target === "hydra"){
+          // passif hydra take more dmg on magic attack
+          target.health -= damage * 1.5;
+        }else{
+          target.health -= damage;
+        }
         console.log(chalk.blue(`${attacker.pseudo} inflicted ${damage} magic damages`));
         break;
       case "Armor boost":
@@ -101,7 +106,6 @@ const action = (action, attacker, target, choose) => {
       console.log(chalk.red(`${attacker.name} inflicted ${damage} magic damages`));
     }
   }
-  
 };
 
 // endGame function Loan
@@ -209,6 +213,9 @@ const prompt = (type, message, choices, number) => {
             return prompt("list", "Play an other game?", ["Yes", "No"], 5);
           }
           turn++;
+          if(turn === 5 && isActive && hydra.health > 0){
+            hydra.headNumber += 1;
+          }
           break;
         case 5:
           // console.log("case 5");
@@ -268,7 +275,17 @@ const prompt = (type, message, choices, number) => {
       // send data
       console.log("\n");
       console.log(chalk.cyan(`Turn ${turn}`));
-      console.table([player, !!player2 ? player2 : null , !!player3 ? player3 : null  , hydra]);
+      const perso = [];
+      perso.push(player);
+      if(player2){
+        perso.push(player2);
+      }
+      if(player3){
+        perso.push(player3);
+      }
+      perso.push(hydra);
+
+      console.table(perso);
       console.log("\n");
 
       // call recursion
@@ -277,6 +294,7 @@ const prompt = (type, message, choices, number) => {
 };
 
 const getCharactersName = () => {
+  // jean
   const arr = [];
   characters.map(char => {
     if(char.name !== "hydra"){
@@ -287,9 +305,15 @@ const getCharactersName = () => {
 }
 
 const getRandomTarget = (players = []) => {
+  // jean
   if(hydra.health > 0 && isActive){
-    const random = Math.floor(Math.random() * (players.length - 1))
-    const target = players[random];
+    const paladin = getPaladin(players)
+    const random = Math.floor(Math.random() * (players.length))
+    let target = players[random];
+    if(paladin){
+      // paladin taunt
+      target = paladin
+    }
     if(target.health <= 0){
       getRandomTarget();
     }
@@ -298,19 +322,30 @@ const getRandomTarget = (players = []) => {
   return
 }
 
-// const getPaladin = (array = []) => {
-//   paladinArr = [];
-//   array.map(player=> {
-//     if(player.name === "paladin" ){
-//       paladinArr
-//     }
-//   })
-//   if () {
-    
-//   }else{
-//     return false;
-//   }
-// }
+const getPaladin = (array = []) => {
+  // jean
+  const paladinArr = [];
+  array.map(player => {
+    if(player.name === "paladin" && player.health > 0){
+      paladinArr.push(player);
+    }
+  })
+  if (paladinArr.length > 0) {
+    //return paladin with more hp
+    return paladinArr.sort(function(a, b) {
+      if (a.health < b.health) {
+        return 1;
+      }
+      if (a.health > b.health) {
+        return -1;
+      }
+      return 0;
+    })[0];
+  }else{
+    return false;
+  }
+}
+
 const startGame = () => {
   isActive = true
   // clear terminal
