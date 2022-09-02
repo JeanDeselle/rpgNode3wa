@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
 		return;
 	} else if (url === "") {
         // loan et jean
-		getTemplate({formulaire : false , classList : characters} , res);
+		getTemplate({list : true , classList : characters} , res);
 	} else if (url === "app.js") {
         // jean
 		res.writeHead(200, { "Content-Type": "text/javascript" });
@@ -58,6 +58,17 @@ const server = http.createServer((req, res) => {
 		const img = fs.readFileSync("./asset/img/shyguy.png");
 		res.write(img);
         return res.end();
+    }else if (url === "rpg"){
+        getTemplate({rpg : true } , res);
+    }else if(url === "game.js"){
+        res.writeHead(200, { "Content-Type": "text/javascript" });
+		const js = fs.readFileSync("./asset/javascript/game.js");
+		res.write(js);
+		return res.end();
+    }else if(req.method === "GET"){
+        res.writeHead(200, {"content-type": "application/json"})
+        res.write({test : "test"});
+        res.end();
     }
 
 	if (req.method === "POST") {

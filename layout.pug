@@ -9,8 +9,14 @@ html(lang="fr")
     body 
     if formulaire
         block addClass
-    else 
+    else if list
         block classList
-    script(src="/app.js") 
+    else if rpg 
+        block rpg
+    if rpg  
+        //- pas fini
+        script(src="/game.js")
+    else
+        script(src="/app.js") 
     div.vignette CLIQUEZ BANDE DE-
     img(src="shyguy.png", alt="Maskass", id="shyGuy" , onclick="shyGuyTalk()")

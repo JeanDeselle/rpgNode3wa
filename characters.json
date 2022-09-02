@@ -35,9 +35,9 @@
 		},
 		{
 			"name": "nimp",
-			"health": { "min": 50, "max": 22 },
+			"health": { "min": 50, "max": 102 },
 			"armor": { "min": 24, "max": 32 },
-			"magic": { "min": 66, "max": 22 },
+			"magic": { "min": 16, "max": 22 },
 			"strength": { "min": 47, "max": 52 },
 			"speed": { "min": 12, "max": 40 }
 		},

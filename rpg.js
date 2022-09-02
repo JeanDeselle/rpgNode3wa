@@ -55,11 +55,13 @@ const action = (action, attacker, target, choose) => {
     switch (action) {
       case "Physical attack":
         damage = attacker.strength + dice - target.armor;
+        if (damage < 0) damage = 0;
         target.health -= damage;
         console.log(chalk.blue(`${attacker.pseudo} inflicted ${damage} physical damages`));
         break;
       case "Magic attack":
         damage = attacker.magic + dice - target.armor;
+        if (damage < 0) damage = 0;
         target.health -= damage;
         console.log(chalk.blue(`${attacker.pseudo} inflicted ${damage} magic damages`));
         break;
@@ -89,10 +91,12 @@ const action = (action, attacker, target, choose) => {
   } else {
     if (dice > 6) {
       damage = attacker.strength + dice - target.armor;
+      if (damage < 0) damage = 0;
       target.health -= damage;
       console.log(chalk.red(`${attacker.name} inflicted ${damage} physical damages`));
     } else {
       damage = attacker.magic + dice - target.armor;
+      if (damage < 0) damage = 0;
       target.health -= damage;
       console.log(chalk.red(`${attacker.name} inflicted ${damage} magic damages`));
     }
@@ -178,6 +182,9 @@ const prompt = (type, message, choices, number) => {
           })
           
           players.forEach(play => {
+              if(!isActive){
+                return
+              }
               if(play.name !== "hydra"){
                 // is player alive
                 if(play === player && play.health > 0){
@@ -187,13 +194,12 @@ const prompt = (type, message, choices, number) => {
                   // allies attack
                   action(attack[Math.floor(Math.random() * 6) + 1] , play, hydra, true);
                 }
-              }else{
-                // todo il attaque que les vivant et le random et le passif
+              }else if(hydra.health > 0){
                 // hydra attack
                 for (let i = 0; i < hydra.headNumber; i++) action(attack[Math.floor(Math.random() * 6) + 1], hydra, getRandomTarget(players), false);
-                // is hydra alive
-                if (hydra.health <= 0) return endGame(player.pseudo, "Hydra", "you", player.health, !!player2 ? player2.pseudo : undefined, !!player3 ? player3.pseudo : undefined);
               }
+              // is hydra alive
+              if (hydra.health <= 0) return endGame(player.pseudo, "Hydra", "you", player.health, !!player2 ? player2.pseudo : undefined, !!player3 ? player3.pseudo : undefined);
               // is player's team alive
               if (player.health <= 0 && (player2.health <= 0 && !!player2) && (player3.health <= 0 && !!player3)) return endGame("Hydra", play.pseudo, "Hydra", hydra.health);
      
@@ -205,22 +211,25 @@ const prompt = (type, message, choices, number) => {
           turn++;
           break;
         case 5:
-          console.log("case 5");
+          // console.log("case 5");
           // restart game
-          if (res.answer === "Yes") return prompt("list", "What difficulty do you want", ["Easy", "Medium", "Hard"], 1);
-          
-          // exit game
-          return process.exit(0);
+          if (res.answer === "Yes") {
+            return  startGame();
+          }else{
+            // exit game
+            return process.exit(0);
+          }
+  
 
         case 6: //loan et jean
           if (res.answer === "0") {
             console.log("Nice guts, i like that");
-            return prompt("list", "Wich class do you want to play ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 2);
+            return prompt("list", "Wich class do you want to play ?",  charactersName , 2);
           }
           else if(res.answer === "1"){
-            return prompt("list", "Which class do you want for your ally ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 7);
+            return prompt("list", "Which class do you want for your ally ?", charactersName , 7);
           }else if(res.answer === "2"){
-            return prompt("list", "Which class do you want for your first allies ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 8);
+            return prompt("list", "Which class do you want for your first allies ?",  charactersName , 8);
           }
           
         case 7: //loan
@@ -233,7 +242,7 @@ const prompt = (type, message, choices, number) => {
 
         case 8: // loan
           player3 = setCharacter(res.answer);
-          return prompt("list", "Which class do you want for your last ally ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName, 7);
+          return prompt("list", "Which class do you want for your last ally ?",  charactersName, 7);
 
         case 9: //loan
           if(res.answer !== ""){
@@ -241,7 +250,7 @@ const prompt = (type, message, choices, number) => {
           }else{
             return prompt("input", "What's your name, seriously?", [], 9);
           }
-          return prompt("list", "Wich class do you want to play ?", /* ["Magician", "Paladin", "Barbarian"] */ charactersName , 2);
+          return prompt("list", "Wich class do you want to play ?",  charactersName , 2);
           
         case 10: //jean 
         if(res.answer !== ""){
@@ -278,25 +287,44 @@ const getCharactersName = () => {
 }
 
 const getRandomTarget = (players = []) => {
-  const random = Math.floor(Math.random() * (players.length -1  + 1))
+  if(hydra.health > 0 && isActive){
+    const random = Math.floor(Math.random() * (players.length - 1))
     const target = players[random];
     if(target.health <= 0){
       getRandomTarget();
     }
     return target
+  }
+  return
 }
 
-// start process
-figlet("UN JOUR ON SAURA CODER", (err, data) => {
-  if (err) return console.log(err);
+// const getPaladin = (array = []) => {
+//   paladinArr = [];
+//   array.map(player=> {
+//     if(player.name === "paladin" ){
+//       paladinArr
+//     }
+//   })
+//   if () {
+    
+//   }else{
+//     return false;
+//   }
+// }
+const startGame = () => {
   isActive = true
   // clear terminal
   const lines = process.stdout.getWindowSize()[1];
   for (let i = 0; i < lines; i++) console.log("\r\n");
 
-  console.log(data);
   console.log("\n");
   charactersName = getCharactersName();
   // call recursion
   prompt("list", "What difficulty do you want", ["Easy", "Medium", "Hard"], 1);
+}
+// start process
+figlet("UN JOUR ON SAURA CODER", (err, data) => {
+  if (err) return console.log(err);
+  console.log(data);
+  startGame()
 });
